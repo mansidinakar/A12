@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Cookie Example</title>
+</head>
+<body>
+	<h1>Cookie Example</h1>
+	<p>Click the button to set a cookie:</p>
+	<button onclick="setCookie()">Set Cookie</button>
+	<p>Reload the page to see the cookie value:</p>
+	<p id="cookieValue"></p>
+
+	<script>
+		function setCookie() {
+			var cookieName = "myCookie";
+			var cookieValue = "Hello, world!";
+			document.cookie = cookieName + "=" + cookieValue + ";";
+		}
+
+		function getCookieValue(cookieName) {
+			var cookies = document.cookie.split("; ");
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i].split("=");
+				if (cookie[0] === cookieName) {
+					return cookie[1];
+				}
+			}
+			return null;
+		}
+
+		var cookieValue = getCookieValue("myCookie");
+		if (cookieValue !== null) {
+			document.getElementById("cookieValue").innerHTML = "The value of myCookie is: " + cookieValue;
+		}
+	</script>
+</body>
+</html>
