@@ -1,37 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Cookie Example</title>
+<script>
+function setCookie(cname,cvalue,exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie() {
+  let user = getCookie("username");
+  if (user != "") {
+    alert("Welcome again " + user);
+  } else {
+     user = prompt("Please enter your name:","");
+     if (user != "" && user != null) {
+       setCookie("username", user, 30);
+     }
+  }
+}
+</script>
 </head>
-<body>
-	<h1>Cookie Example</h1>
-	<p>Click the button to set a cookie:</p>
-	<button onclick="setCookie()">Set Cookie</button>
-	<p>Reload the page to see the cookie value:</p>
-	<p id="cookieValue"></p>
 
-	<script>
-		function setCookie() {
-			var cookieName = "myCookie";
-			var cookieValue = "Hello, world!";
-			document.cookie = cookieName + "=" + cookieValue + ";";
-		}
+<body onload="checkCookie()"></body>
 
-		function getCookieValue(cookieName) {
-			var cookies = document.cookie.split("; ");
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = cookies[i].split("=");
-				if (cookie[0] === cookieName) {
-					return cookie[1];
-				}
-			}
-			return null;
-		}
-
-		var cookieValue = getCookieValue("myCookie");
-		if (cookieValue !== null) {
-			document.getElementById("cookieValue").innerHTML = "The value of myCookie is: " + cookieValue;
-		}
-	</script>
-</body>
 </html>
+
+
