@@ -5,7 +5,7 @@
 </head>
 <body>
 	<h1>What day of the week is it?</h1>
-	<form onsubmit="setCookie()">
+	<form onsubmit="setCookie(); return false;">
 		<label for="day">Enter the day of the week:</label>
 		<input type="text" id="day" name="day">
 		<button type="submit">Submit</button>
@@ -14,6 +14,7 @@
 		function setCookie() {
 			var day = document.getElementById("day").value;
 			document.cookie = "day=" + day + "; path=/";
+			displayMessage(day);
 		}
 
 		function getCookie(name) {
@@ -27,20 +28,16 @@
 			return null;
 		}
 
-		function displayMessage() {
-			var day = getCookie("day");
-			if (day) {
-				document.write("<p>Have a good " + day + "!</p>");
-			} else {
-				var day = prompt("Enter the day of the week:");
-				if (day) {
-					setCookie(day);
-					displayMessage();
-				}
-			}
+		function displayMessage(day) {
+			var message = "Have a good " + day + "!";
+			document.getElementById("message").innerHTML = message;
 		}
 
-		window.onload = displayMessage;
+		var day = getCookie("day");
+		if (day) {
+			displayMessage(day);
+		}
 	</script>
+	<div id="message"></div>
 </body>
 </html>
