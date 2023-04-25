@@ -5,35 +5,42 @@
 </head>
 <body>
 	<h1>What day of the week is it?</h1>
-	<form onsubmit="setCookie()">
+	<form>
 		<label for="day">Enter the day of the week:</label>
 		<input type="text" id="day" name="day">
 		<button type="submit">Submit</button>
 	</form>
 	<script>
-		function setCookie() {
-			var day = document.getElementById("day").value;
-			document.cookie = "day=" + day + "; path=/";
-		}
+		// Get the form element
+		var form = document.querySelector('form');
 
-		function getCookie(name) {
-			var cookies = document.cookie.split(";");
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = cookies[i].trim();
-				if (cookie.startsWith(name + "=")) {
-					return cookie.substring(name.length + 1);
-				}
-			}
-			return null;
-		}
+		// Add an event listener for the form submission
+		form.addEventListener('submit', function(event) {
+			// Prevent the form from submitting to the server
+			event.preventDefault();
 
-		var day = getCookie("day");
-		if (day) {
-			document.write("<p>Have a good " + day + "!</p>");
+			// Get the value of the day input field
+			var day = document.getElementById('day').value;
+
+			// Set the cookie with the day value
+			document.cookie = 'day=' + day + '; path=/';
+
+			// Reload the page
+			location.reload();
+		});
+
+		// Check if the cookie exists
+		if (document.cookie.split(';').some((item) => item.trim().startsWith('day='))) {
+			// Get the value of the day cookie
+			var dayCookie = document.cookie
+				.split(';')
+				.find((item) => item.trim().startsWith('day='))
+				.split('=')[1];
+
+			// Display a greeting with the day value
+			document.write('<p>Have a good ' + dayCookie + '!</p>');
 		}
 	</script>
 </body>
 </html>
-
-
 
