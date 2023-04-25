@@ -5,12 +5,35 @@
 </head>
 <body>
 	<h1>What day of the week is it?</h1>
-	<form>
+	<form onsubmit="setCookie()">
 		<label for="day">Enter the day of the week:</label>
 		<input type="text" id="day" name="day">
 		<button type="submit">Submit</button>
 	</form>
+	<script>
+		function setCookie() {
+			var day = document.getElementById("day").value;
+			document.cookie = "day=" + day + "; path=/";
+		}
+
+		function getCookie(name) {
+			var cookies = document.cookie.split(";");
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i].trim();
+				if (cookie.startsWith(name + "=")) {
+					return cookie.substring(name.length + 1);
+				}
+			}
+			return null;
+		}
+
+		var day = getCookie("day");
+		if (day) {
+			document.write("<p>Have a good " + day + "!</p>");
+		}
+	</script>
 </body>
 </html>
+
 
 
